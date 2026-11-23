@@ -1,43 +1,64 @@
 
-import {
-  TouchableOpacity,
-  TouchableOpacityProps,
-  Text,
-  Image,
-  View
-} from "react-native";
+import { View, Text } from "react-native";
 
 import { styles } from "./styles";
 
-type Props = Omit<TouchableOpacityProps, "id"> & {
-  id: number;
-  nome: string;
-  siglaPartido: string;
-  siglaUf: string;
-  urlFoto: string;
-}
+type Props = {
+    id: number;
+    nome: string;
+    descricao: string;
+    categoria: string;
+    preco: number;
+    quantidade: number;
+};
 
-export function Card({ id, nome, siglaPartido, siglaUf, urlFoto, ...rest }: Props) {
+export function Card({
+    nome,
+    descricao,
+    categoria,
+    preco,
+    quantidade
+}: Props) {
+
     return (
-        <TouchableOpacity style={styles.container} {...rest}>
+        <View style={styles.container}>
 
-            <Image
-                source={{ uri: urlFoto }}
-                style={styles.imagem}
-            />
-
-            <View style={styles.informacoes}>
-                <Text style={styles.text}>{nome}</Text>
-
-                <Text style={styles.text}>
-                    Partido: {siglaPartido}
+            <View style={styles.cabecalho}>
+                <Text style={styles.nome}>
+                    {nome}
                 </Text>
 
-                <Text style={styles.text}>
-                    Estado: {siglaUf}
-                </Text>
+                <View style={styles.etiqueta}>
+                    <Text style={styles.textoEtiqueta}>
+                        {categoria}
+                    </Text>
+                </View>
             </View>
 
-        </TouchableOpacity>
-    )
+            <Text style={styles.descricao}>
+                {descricao}
+            </Text>
+
+            <View style={styles.divisor} />
+
+            <View style={styles.informacoes}>
+
+                <View>
+                    <Text style={styles.rotulo}>PREÇO</Text>
+                    <Text style={styles.preco}>
+                        R$ {preco.toFixed(2).replace(".", ",")}
+                    </Text>
+                </View>
+
+                <View style={styles.quantidadeContainer}>
+                    <Text style={styles.rotulo}>QUANTIDADE</Text>
+                    <Text style={styles.quantidade}>
+                        {quantidade} unidades
+                    </Text>
+                </View>
+
+            </View>
+
+        </View>
+    );
 }
